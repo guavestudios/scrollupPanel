@@ -33,7 +33,8 @@
 			elementInner:null,
 			context:$(window),
 			dock:null,
-			debug:false
+			debug:false,
+			fixedClass:"scrollupPanel-fixed"
 		};
 		function init(element,opts){
 			self.options=$.extend({},self.options,opts);
@@ -77,6 +78,7 @@
 					position:"fixed"
 				});
 				isFixed=true;
+				header.addClass(self.options.fixedClass);
 				if (self.options.debug) info("isFixed",isFixed);
 			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed) {
 				spacer.detach();
@@ -85,6 +87,7 @@
 					position:""
 				});
 				isFixed=false;
+				header.removeClass(self.options.fixedClass);
 				if (self.options.debug) info("isFixed",isFixed);
 			}
 
