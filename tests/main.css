@@ -41,6 +41,17 @@ html,body {
   height: 6em;
 }
 
+.sidemenu {
+	float:left;
+	width: 30%;
+	height: 10em;
+	background-color: #e8be0c;
+}
+.inlineelement {
+	float:left;
+	margin: 4em;
+}
+
 //media querys
 @media (max-width: 500px){
   .topelement {

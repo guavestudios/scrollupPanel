@@ -20,9 +20,12 @@
 		var self=this;
 
 		var scrollTop=0;
+		var panelWidth=0;
 		var panelHeight=0;
 		var panelTopOffset=0;
+		var panelLeftOffset=0;
 		var panelInnerHeight=0;
+		var panelMarginTop=0;
 		var panelScroll=0;
 		var spacer=$("<div>");
 		var isFixed=false;
@@ -34,7 +37,8 @@
 			context:$(window),
 			dock:null,
 			debug:false,
-			fixedClass:"scrollupPanel-fixed"
+			fixedClass:"scrollupPanel-fixed",
+			marginTop:null
 		};
 		function init(element,opts){
 			self.options=$.extend({},self.options,opts);
@@ -46,13 +50,21 @@
 			self.options.context.on("resize",onResize);
 		}
 		function updateSizes(){
-			panelHeight=self.options.element.height();
-			if (!isFixed)
-				panelTopOffset=self.options.element.offset().top;
-			else
-				panelTopOffset=spacer.offset().top;
+			var element=self.options.element;
+			panelWidth=element.width();
+			panelHeight=element.height();
+
+			var offset= isFixed?spacer.offset():element.offset();
+			panelTopOffset=offset.top;
+			panelLeftOffset=offset.left;
+
 			panelInnerHeight=((typeof self.options.scrollUpHeight == "function")?self.options.scrollUpHeight():self.options.scrollUpHeight) || 0;
-			spacer.height(panelHeight);
+
+			panelMarginTop=((typeof self.options.marginTop == "function")?self.options.marginTop():self.options.marginTop) || 0;
+			spacer.css({
+				width: panelWidth,
+				height: panelHeight
+			});
 			scrollUpStart=0;
 
 			if (self.options.debug) info("panelHeight",panelHeight);
@@ -68,14 +80,23 @@
 				dockBottom=self.options.dock.getVisiblePanelBottom();
 			}
 
-			var panelPos=panelTopOffset+panelInnerHeight-dockBottom;
+			var panelPos=panelTopOffset+panelInnerHeight-dockBottom-panelMarginTop;
 
 			if (scrollTopNew>panelPos && !isFixed){
-				spacer.height(panelHeight);
+				var left=header.offset().left;
+				spacer.css({
+					width:panelWidth,
+					height:panelHeight,
+					float:header.css("float"),
+					display:header.css("display")
+				});
 				header.after(spacer);
 				header.css({
 					top:-panelInnerHeight+dockBottom,
+					left:left,
 					position:"fixed"
+
+
 				});
 				isFixed=true;
 				header.addClass(self.options.fixedClass);
@@ -84,6 +105,7 @@
 				spacer.detach();
 				header.css({
 					top:"",
+					left:"",
 					position:""
 				});
 				isFixed=false;
@@ -92,7 +114,7 @@
 			}
 
 			if (isFixed){
-				var top=Math.max(0,Math.min(scrollTopNew-scrollUpStart,panelInnerHeight));
+				var top=Math.max(0,Math.min(scrollTopNew-scrollUpStart,panelInnerHeight))-panelMarginTop;
 				scrollUpStart=scrollTopNew-top;
 				panelScroll=panelInnerHeight-top;
 				header.css("top",-top+dockBottom);

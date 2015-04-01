@@ -11,11 +11,12 @@
 		$(function(){
 			$(".header").scrollupPanel({
 				scrollUpHeight:function(){
-					return $(".header_main").height();
+					return $(".header_main").height()
 				}
 			});
-			$(".inpageheader").scrollupPanel({
-				dock:$(".header").scrollupPanel()
+			$(".sidemenu").scrollupPanel({
+				dock:$(".header").scrollupPanel(),
+				marginTop:50
 			});
 		});
 	</script>
@@ -30,7 +31,10 @@
 	<div class="inpageheader">
 		inpage header
 	</div>
-	<div class="page" style="background-color:#009900;"></div>
+	<div class="page" style="background-color:#009900;">
+		<span class="inlineelement">blablblabla</span>
+		<div class="sidemenu">sidemenu</div>
+	</div>
 	<div class="page" style="background-color:#000099;"></div>
 	<div class="output">sadfdsfa</div>
 </body>
