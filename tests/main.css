@@ -1,0 +1,54 @@
+html,body {
+  width: 100%;
+  height: 100%;
+  margin:0;
+}
+.topelement {
+  height: 3em;
+}
+
+
+.page {
+  width: 100%;
+  height: 100vh;
+}
+.page.half {
+	height: 50vh;
+}
+
+.output {
+  background: white;
+  position:fixed;
+  display:block;
+  left: 40px;
+  top: 90vh;
+}
+.header {
+  width: 100%;
+
+}
+.header .header_sub {
+	height: 20%;
+	background-color:#009999;
+}
+.header .header_main {
+	background-color:#009955;
+	height: 6em;
+}
+.inpageheader {
+  background-color: #005599;
+  width: 100%;
+  height: 6em;
+}
+
+//media querys
+@media (max-width: 500px){
+  .topelement {
+    display:none;
+  }
+}
+@media (max-width: 400px){
+  .header .header_sub {
+    height: 6em;
+  }
+}
