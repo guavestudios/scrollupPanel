@@ -29,7 +29,10 @@
 		var panelScroll=0;
 		var spacer=$("<div>");
 		var isFixed=false;
-		var scrollUpStart=0;
+		var scrollUpStart=0
+
+		//debug output
+		var info=null;//function(){};
 
 		self.options={
 			element:null,
@@ -38,7 +41,8 @@
 			dock:null,
 			debug:false,
 			fixedClass:"scrollupPanel-fixed",
-			marginTop:null
+			marginTop:null,
+			bottom:null
 		};
 		function init(element,opts){
 			self.options=$.extend({},self.options,opts);
@@ -51,8 +55,8 @@
 		}
 		function updateSizes(){
 			var element=self.options.element;
-			panelWidth=element.width();
-			panelHeight=element.height();
+			panelWidth=element.outerWidth();
+			panelHeight=element.outerHeight();
 
 			var offset= isFixed?spacer.offset():element.offset();
 			panelTopOffset=offset.top;
@@ -67,58 +71,63 @@
 			});
 			scrollUpStart=0;
 
-			if (self.options.debug) info("panelHeight",panelHeight);
+			info&&info("panelHeight",panelHeight);
 		}
 		function updateScroll(force){
 			var scrollTopNew=self.options.context.scrollTop();
 			if (scrollTopNew==scrollTop && !force) return;
 
-			if (self.options.debug) info("scroll",scrollTopNew);
-			var header=self.options.element;
+			info&&info("scroll",scrollTopNew);
+			var panel=self.options.element;
 			var dockBottom=0;
 			if (self.options.dock){
 				dockBottom=self.options.dock.getVisiblePanelBottom();
 			}
 
+			//calculate panel position with all offsets calculated
 			var panelPos=panelTopOffset+panelInnerHeight-dockBottom-panelMarginTop;
 
 			if (scrollTopNew>panelPos && !isFixed){
-				var left=header.offset().left;
+				var left=panel.offset().left;
 				spacer.css({
 					width:panelWidth,
 					height:panelHeight,
-					float:header.css("float"),
-					display:header.css("display")
+					float:panel.css("float"),
+					display:panel.css("display")
 				});
-				header.after(spacer);
-				header.css({
+				panel.after(spacer);
+				panel.css({
 					top:-panelInnerHeight+dockBottom,
 					left:left,
-					position:"fixed"
+					position:"fixed",
+					bottom:(self.options.bottom!=null)?self.options.bottom:""
 
 
 				});
 				isFixed=true;
-				header.addClass(self.options.fixedClass);
-				if (self.options.debug) info("isFixed",isFixed);
+				panel.addClass(self.options.fixedClass);
+
+				info&&info("isFixed",isFixed);
 			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed) {
 				spacer.detach();
-				header.css({
+				panel.css({
 					top:"",
 					left:"",
-					position:""
+					position:"",
+					bottom:""
 				});
 				isFixed=false;
-				header.removeClass(self.options.fixedClass);
-				if (self.options.debug) info("isFixed",isFixed);
+				panel.removeClass(self.options.fixedClass);
+
+				info&&info("isFixed",isFixed);
 			}
 
 			if (isFixed){
 				var top=Math.max(0,Math.min(scrollTopNew-scrollUpStart,panelInnerHeight))-panelMarginTop;
 				scrollUpStart=scrollTopNew-top;
 				panelScroll=panelInnerHeight-top;
-				header.css("top",-top+dockBottom);
-				if (self.options.debug) info("fixedTop",top);
+				panel.css("top",-top+dockBottom);
+				info&&info("fixedTop",top);
 			} else {
 				scrollUpStart=0;
 			}
