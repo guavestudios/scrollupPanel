@@ -35,8 +35,9 @@
 		var widthContext=1;
 
 		//debug output
-		var info=null;//function(){};
+		var info=null;
 
+		//Default Options
 		self.options={
 			element:null,
 			elementInner:null,
@@ -48,6 +49,12 @@
 			bottom:null,
 			maxWidth:null
 		};
+
+		/**
+		 * Initialize Method
+		 * @param {Object} element Dom or jQuery element
+		 * @param {Object} opts    Options that will extend default options
+		 */
 		function init(element,opts){
 			self.options=$.extend({},self.options,opts);
 			self.options.element=element;

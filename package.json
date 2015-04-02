@@ -13,7 +13,7 @@
   "license": "MIT",
 	"jspm": {
     "jspmNodeConversion": false,
-    "format": "es6",
+    "format": "cjs",
     "dependencies": {
 			"jQuery":"^1.9"
     }
