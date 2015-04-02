@@ -163,7 +163,11 @@
 			return isFixed;
 		}
 		function getVisiblePanelBottom(){
-			return panelHeight-panelInnerHeight+panelScroll;
+			var dockBottom=0;
+			if (self.options.dock){
+				dockBottom=self.options.dock.getVisiblePanelBottom();
+			}
+			return panelHeight-panelInnerHeight+panelScroll+dockBottom;
 		}
 
 		this.init=init;

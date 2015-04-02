@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<link rel="stylesheet" href="main.css">
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="../src/scrollupPanel.js"></script>
+	<script>
+		$(function(){
+			$(".header").scrollupPanel({
+				scrollUpHeight:function(){
+					return $(".header_main").height()
+				}
+			});
+			$(".inpageheader").scrollupPanel({
+				dock:$(".header").scrollupPanel()
+			});
+			$(".sidemenu").scrollupPanel({
+				dock:$(".inpageheader").scrollupPanel(),
+				marginTop:50
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="topelement">test</div>
+	<div class="header">
+		<div class="header_main">header main</div>
+		<div class="header_sub">header sub</div>
+	</div>
+	<div class="page half" style="background-color:#990000;"></div>
+	<div class="inpageheader">
+		inpage header
+	</div>
+	<div class="page" style="background-color:#009900;">
+		<span class="inlineelement">blablblabla</span>
+		<div class="sidemenu">sidemenu</div>
+	</div>
+	<div class="page" style="background-color:#000099;"></div>
+	<div class="output">sadfdsfa</div>
+</body>
+</html>
