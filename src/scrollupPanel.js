@@ -31,6 +31,9 @@
 		var isFixed=false;
 		var scrollUpStart=0
 
+		var widthMax=0;
+		var widthContext=1;
+
 		//debug output
 		var info=null;//function(){};
 
@@ -42,7 +45,8 @@
 			debug:false,
 			fixedClass:"scrollupPanel-fixed",
 			marginTop:null,
-			bottom:null
+			bottom:null,
+			maxWidth:null
 		};
 		function init(element,opts){
 			self.options=$.extend({},self.options,opts);
@@ -54,7 +58,13 @@
 			self.options.context.on("resize",onResize);
 		}
 		function updateSizes(){
-			var element=self.options.element;
+			var o=self.options;
+			if (o.maxWidth){
+				widthMax=((typeof o.maxWidth == "function")?o.maxWidth():o.maxWidth) || 0;
+				widthContext=o.context.width();
+			}
+
+			var element=o.element;
 			panelWidth=element.outerWidth();
 			panelHeight=element.outerHeight();
 
@@ -62,9 +72,9 @@
 			panelTopOffset=offset.top;
 			panelLeftOffset=offset.left;
 
-			panelInnerHeight=((typeof self.options.scrollUpHeight == "function")?self.options.scrollUpHeight():self.options.scrollUpHeight) || 0;
+			panelInnerHeight=((typeof o.scrollUpHeight == "function")?o.scrollUpHeight():o.scrollUpHeight) || 0;
 
-			panelMarginTop=((typeof self.options.marginTop == "function")?self.options.marginTop():self.options.marginTop) || 0;
+			panelMarginTop=((typeof o.marginTop == "function")?o.marginTop():o.marginTop) || 0;
 			spacer.css({
 				width: panelWidth,
 				height: panelHeight
@@ -87,7 +97,7 @@
 			//calculate panel position with all offsets calculated
 			var panelPos=panelTopOffset+panelInnerHeight-dockBottom-panelMarginTop;
 
-			if (scrollTopNew>panelPos && !isFixed){
+			if (scrollTopNew>panelPos && !isFixed && (widthMax<=widthContext)){
 				var left=panel.offset().left;
 				spacer.css({
 					width:panelWidth,
@@ -108,7 +118,7 @@
 				panel.addClass(self.options.fixedClass);
 
 				info&&info("isFixed",isFixed);
-			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed) {
+			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed || (widthMax>widthContext && isFixed)) {
 				spacer.detach();
 				panel.css({
 					top:"",
@@ -163,6 +173,7 @@
 			return isFixed;
 		}
 		function getVisiblePanelBottom(){
+			if (!isFixed) return 0;
 			var dockBottom=0;
 			if (self.options.dock){
 				dockBottom=self.options.dock.getVisiblePanelBottom();
