@@ -5,10 +5,23 @@
 	<title>Document</title>
 
 	<link rel="stylesheet" href="main.css">
-	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="../lib/jquery-1.11.2.min.js"></script>
 	<script src="../src/scrollupPanel.js"></script>
 	<script>
+
+		var infoData={};
+		function info(id,msg){
+			infoData[id]=msg;
+
+			var str="";
+			for (var i in infoData){
+				str+=" | "+i+": "+infoData[i];
+
+			}
+			$(".output").text(str);
+		}
 		$(function(){
+
 			$(".header").scrollupPanel({
 				scrollUpHeight:function(){
 					return $(".header_main").height()
@@ -16,7 +29,9 @@
 			});
 			$(".sidemenu").scrollupPanel({
 				dock:$(".header").scrollupPanel(),
-				marginTop:50
+				marginTop:50,
+				limit:300,
+				debug:info
 			});
 		});
 	</script>
@@ -35,7 +50,13 @@
 		<span class="inlineelement">blablblabla</span>
 		<div class="sidemenu">sidemenu</div>
 	</div>
-	<div class="page" style="background-color:#000099;"></div>
+	<div class="page" style="background-color:#000099;">
+		this page content is<br>
+		just for display<br>
+		it helps to<br>
+		show the offset<br>
+		not the last container
+	</div>
 	<div class="output">sadfdsfa</div>
 </body>
 </html>
