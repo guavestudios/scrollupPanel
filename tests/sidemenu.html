@@ -10,9 +10,17 @@
 	<script>
 
 		var infoData={};
+		var infoDataRequested=false;
 		function info(id,msg){
 			infoData[id]=msg;
+			if(!infoDataRequested){
+				infoDataRequested=true;
+				ScrollUpPanel.animationFrame.request(infoWrite);
+			}
 
+		}
+		function infoWrite(){
+			infoDataRequested=false;
 			var str="";
 			for (var i in infoData){
 				str+=" | "+i+": "+infoData[i];

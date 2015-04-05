@@ -10,7 +10,8 @@
     });
   } else {
     // Global Variables
-    root.returnExportsGlobal = factory(window.jQuery);
+    //root.returnExportsGlobal = factory(window.jQuery);
+    root.ScrollUpPanel = factory(window.jQuery);
   }
 }(this, function ($) {
 
@@ -147,14 +148,15 @@
 				panelScroll=panelInnerHeight-top;
 				var limitPenalty=0;
 				if (self.options.limit){
-					if ((scrollTopNew+self.options.limit)>(contextScrollHeight)){
-						limitPenalty=contextScrollHeight-scrollTopNew-self.options.limit;
+					var btm=getVisiblePanelBottom();
+					if ((scrollTopNew+btm+self.options.limit)>(contextScrollHeight+contextHeight)){
+						limitPenalty=contextScrollHeight+contextHeight-scrollTopNew-btm-self.options.limit;
 					} else  limitPenalty=0;
-					info&&info("limitPenalty",limitPenalty);
-					info&&info("scrollHeight",contextScrollHeight);
+					info&&info("limitPenalty",limitPenalty+"|"+btm+"|"+self.options.limit);
+					info&&info("scrollTot",scrollTopNew+"/"+contextScrollHeight);
 				}
 				panel.css("top",-top+dockBottom+limitPenalty);
-				info&&info("fixedTop",top);
+				//info&&info("fixedTop",top);
 			} else {
 				scrollUpStart=0;
 			}
