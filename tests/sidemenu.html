@@ -38,7 +38,9 @@
 			$(".sidemenu").scrollupPanel({
 				dock:$(".header").scrollupPanel(),
 				marginTop:50,
-				limit:300,
+				limit:function(){
+					return $(".page").last().height();
+				},
 				debug:info
 			});
 		});

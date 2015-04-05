@@ -28,6 +28,7 @@
 		var panelInnerHeight=0;
 		var panelMarginTop=0;
 		var panelScroll=0;
+		var panelBottomLimit=0;
 		var contextHeight=0;
 		var contextScrollHeight=0;
 		var spacer=$("<div>");
@@ -91,6 +92,9 @@
 			contextHeight=o.context.height();
 			contextScrollHeight=(o.context[0]==window)?$("body")[0].scrollHeight:o.context[0].scrollHeight;
 			contextScrollHeight-=contextHeight;
+
+			panelBottomLimit=((typeof o.limit == "function")?o.limit():o.limit) || 0;
+
 			info&&info("panelHeight",panelHeight);
 		}
 		function updateScroll(force){
@@ -147,12 +151,12 @@
 				scrollUpStart=scrollTopNew-top;
 				panelScroll=panelInnerHeight-top;
 				var limitPenalty=0;
-				if (self.options.limit){
+				if (panelBottomLimit){
 					var btm=getVisiblePanelBottom();
-					if ((scrollTopNew+btm+self.options.limit)>(contextScrollHeight+contextHeight)){
-						limitPenalty=contextScrollHeight+contextHeight-scrollTopNew-btm-self.options.limit;
+					if ((scrollTopNew+btm+panelBottomLimit)>(contextScrollHeight+contextHeight)){
+						limitPenalty=contextScrollHeight+contextHeight-scrollTopNew-btm-panelBottomLimit;
 					} else  limitPenalty=0;
-					info&&info("limitPenalty",limitPenalty+"|"+btm+"|"+self.options.limit);
+					info&&info("limitPenalty",limitPenalty+"|"+btm+"|"+panelBottomLimit);
 					info&&info("scrollTot",scrollTopNew+"/"+contextScrollHeight);
 				}
 				panel.css("top",-top+dockBottom+limitPenalty);
