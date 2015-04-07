@@ -10,7 +10,8 @@
     });
   } else {
     // Global Variables
-    root.returnExportsGlobal = factory(window.jQuery);
+    //root.returnExportsGlobal = factory(window.jQuery);
+    root.ScrollUpPanel = factory(window.jQuery);
   }
 }(this, function ($) {
 
@@ -27,9 +28,12 @@
 		var panelInnerHeight=0;
 		var panelMarginTop=0;
 		var panelScroll=0;
+		var panelBottomLimit=0;
+		var contextHeight=0;
+		var contextScrollHeight=0;
 		var spacer=$("<div>");
 		var isFixed=false;
-		var scrollUpStart=0
+		var scrollUpStart=0;
 
 		var widthMax=0;
 		var widthContext=1;
@@ -47,7 +51,8 @@
 			fixedClass:"scrollupPanel-fixed",
 			marginTop:null,
 			bottom:null,
-			maxWidth:null
+			maxWidth:null,
+			limit:null
 		};
 
 		/**
@@ -58,6 +63,9 @@
 		function init(element,opts){
 			self.options=$.extend({},self.options,opts);
 			self.options.element=element;
+
+			if (self.options.debug)
+				info=self.options.debug;
 
 			updateSizes();
 			updateScroll();
@@ -87,6 +95,12 @@
 				height: panelHeight
 			});
 			scrollUpStart=0;
+
+			contextHeight=o.context.height();
+			contextScrollHeight=(o.context[0]==window)?$("body")[0].scrollHeight:o.context[0].scrollHeight;
+			contextScrollHeight-=contextHeight;
+
+			panelBottomLimit=((typeof o.limit == "function")?o.limit():o.limit) || 0;
 
 			info&&info("panelHeight",panelHeight);
 		}
@@ -143,8 +157,17 @@
 				var top=Math.max(0,Math.min(scrollTopNew-scrollUpStart,panelInnerHeight))-panelMarginTop;
 				scrollUpStart=scrollTopNew-top;
 				panelScroll=panelInnerHeight-top;
-				panel.css("top",-top+dockBottom);
-				info&&info("fixedTop",top);
+				var limitPenalty=0;
+				if (panelBottomLimit){
+					var btm=getVisiblePanelBottom();
+					if ((scrollTopNew+btm+panelBottomLimit)>(contextScrollHeight+contextHeight)){
+						limitPenalty=contextScrollHeight+contextHeight-scrollTopNew-btm-panelBottomLimit;
+					} else  limitPenalty=0;
+					info&&info("limitPenalty",limitPenalty+"|"+btm+"|"+panelBottomLimit);
+					info&&info("scrollTot",scrollTopNew+"/"+contextScrollHeight);
+				}
+				panel.css("top",-top+dockBottom+limitPenalty);
+				//info&&info("fixedTop",top);
 			} else {
 				scrollUpStart=0;
 			}

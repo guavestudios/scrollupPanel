@@ -11,6 +11,8 @@ html,body {
 .page {
   width: 100%;
   height: 100vh;
+
+	color: white;
 }
 .page.half {
 	height: 50vh;
@@ -44,12 +46,13 @@ html,body {
 .sidemenu {
 	float:left;
 	width: 30%;
-	height: 10em;
+	height: 20em;
 	background-color: #e8be0c;
 }
 .inlineelement {
 	float:left;
 	margin: 4em;
+
 }
 
 //media querys
