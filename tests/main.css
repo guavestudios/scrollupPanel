@@ -14,6 +14,9 @@ html,body {
 
 	color: white;
 }
+.page.halfwidth {
+	width: 50%;
+}
 .page.half {
 	height: 50vh;
 }

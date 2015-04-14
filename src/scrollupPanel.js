@@ -52,6 +52,7 @@
 			marginTop:null,
 			bottom:null,
 			maxWidth:null,
+			setExplizitWidth:false,
 			limit:null
 		};
 
@@ -120,6 +121,7 @@
 
 			if (scrollTopNew>panelPos && !isFixed && (widthMax<=widthContext)){
 				var left=panel.offset().left;
+				updateSizes();
 				spacer.css({
 					width:panelWidth,
 					height:panelHeight,
@@ -135,6 +137,8 @@
 
 
 				});
+				if (self.options.setExplizitWidth)
+					panel.css("width",panelWidth);
 				isFixed=true;
 				panel.addClass(self.options.fixedClass);
 
@@ -144,6 +148,8 @@
 				panel.css({
 					top:"",
 					left:"",
+					width:"",
+					height:"",
 					position:"",
 					bottom:""
 				});
