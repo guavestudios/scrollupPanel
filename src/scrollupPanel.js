@@ -216,6 +216,14 @@
 			}
 			return panelHeight-panelInnerHeight+panelScroll+dockBottom;
 		}
+		function getPanelBottomFull(){
+			if (!isFixed) return 0;
+			var dockBottom=0;
+			if (self.options.dock){
+				dockBottom=self.options.dock.getPanelBottomFull();
+			}
+			return dockBottom+panelHeight;
+		}
 
 		this.init=init;
 		this.getPanelHeight=getPanelHeight;
@@ -223,6 +231,7 @@
 		this.isFixed=isFixed;
 		this.getPanelScroll=getPanelScroll;
 		this.getVisiblePanelBottom=getVisiblePanelBottom;
+		this.getPanelBottomFull=getPanelBottomFull;
 		this.invalidate=invalidate;
 	}
 	ScrollUpPanel.animationFrame={
