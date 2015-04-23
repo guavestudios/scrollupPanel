@@ -1,5 +1,5 @@
 {
-  "name": "scrollupPanel",
+  "name": "scrolluppanel",
   "version": "0.1.0",
   "description": "scrollupPanel",
   "main": "src/scrollupPanel.js",
@@ -12,10 +12,14 @@
   "author": "https://github.com/nomiad",
   "license": "MIT",
 	"jspm": {
+		"main":"scrollupPanel",
+		"directories": {
+			"lib": "src"
+		},
     "jspmNodeConversion": false,
     "format": "cjs",
     "dependencies": {
-			"jQuery":"^1.9"
+			"jquery":"^1.9"
     }
   }
 }
