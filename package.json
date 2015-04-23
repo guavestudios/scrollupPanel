@@ -19,7 +19,7 @@
     "jspmNodeConversion": false,
     "format": "cjs",
     "dependencies": {
-			"jquery":"^1.9"
+			"github:components/jquery":"^1.9"
     }
   }
 }
