@@ -130,6 +130,9 @@
 					float:panel.css("float"),
 					display:panel.css("display")
 				});
+        if (self.options.onSpacerInsert)
+          self.options.onSpacerInsert(spacer);
+
 				panel.after(spacer);
 				panel.css({
 					top:-panelInnerHeight+dockBottom,
@@ -147,6 +150,8 @@
 				info&&info("isFixed",isFixed);
 			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed || (widthMax>widthContext && isFixed)) {
 				spacer.detach();
+        if (self.options.onSpacerDetached)
+          self.options.onSpacerDetached(spacer);
 				panel.css({
 					top:"",
 					left:"",
