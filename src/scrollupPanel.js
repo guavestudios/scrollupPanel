@@ -53,7 +53,9 @@
 			bottom:null,
 			maxWidth:null,
 			setExplizitWidth:false,
-			limit:null
+			limit:null,
+
+      panelHeight:null
 		};
 
 		/**
@@ -82,7 +84,7 @@
 
 			var element=o.element;
 			panelWidth=element.outerWidth();
-			panelHeight=element.outerHeight();
+			panelHeight=((typeof o.panelHeight == "function")?o.panelHeight():o.panelHeight) || element.outerHeight();
 
 			var offset= isFixed?spacer.offset():element.offset();
 			panelTopOffset=offset.top;
