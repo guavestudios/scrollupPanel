@@ -36,6 +36,7 @@
 		var scrollUpStart=0;
 
 		var widthMin=0;
+		var widthMax=Number.MAX_VALUE;
 		var widthContext=1;
 
 		//debug output
@@ -52,6 +53,7 @@
 			marginTop:null,
 			bottom:null,
 			minWidth:null,
+      maxWidth:null,
 			setExplizitWidth:false,
 			limit:null,
 
@@ -77,10 +79,14 @@
 		}
 		function updateSizes(){
 			var o=self.options;
+
+      widthContext=o.context.width();
 			if (o.minWidth){
 				widthMin=((typeof o.minWidth == "function")?o.minWidth():o.minWidth) || 0;
-				widthContext=o.context.width();
 			}
+      if (o.maxWidth){
+        widthMax=((typeof o.maxWidth == "function")?o.maxWidth():o.maxWidth) || Number.MAX_VALUE;
+      }
 
 			var element=o.element;
 			panelWidth=element.outerWidth();
@@ -121,7 +127,7 @@
 			//calculate panel position with all offsets calculated
 			var panelPos=panelTopOffset+panelInnerHeight-dockBottom-panelMarginTop;
 
-			if (scrollTopNew>panelPos && !isFixed && (widthMin<=widthContext)){
+			if (scrollTopNew>panelPos && !isFixed && (widthMin<=widthContext && widthMax>=widthContext)){
 				var left=panel.offset().left;
 				updateSizes();
 				spacer.css({
@@ -148,7 +154,7 @@
 				panel.addClass(self.options.fixedClass);
 
 				info&&info("isFixed",isFixed);
-			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed || (widthMin>widthContext && isFixed)) {
+			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed || (widthMin>widthContext && isFixed) || (widthMax<widthContext && isFixed)) {
 				spacer.detach();
         if (self.options.onSpacerDetached)
           self.options.onSpacerDetached(spacer);
