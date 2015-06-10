@@ -35,7 +35,7 @@
 		var isFixed=false;
 		var scrollUpStart=0;
 
-		var widthMax=0;
+		var widthMin=0;
 		var widthContext=1;
 
 		//debug output
@@ -51,7 +51,7 @@
 			fixedClass:"scrollupPanel-fixed",
 			marginTop:null,
 			bottom:null,
-			maxWidth:null,
+			minWidth:null,
 			setExplizitWidth:false,
 			limit:null,
 
@@ -77,8 +77,8 @@
 		}
 		function updateSizes(){
 			var o=self.options;
-			if (o.maxWidth){
-				widthMax=((typeof o.maxWidth == "function")?o.maxWidth():o.maxWidth) || 0;
+			if (o.minWidth){
+				widthMin=((typeof o.minWidth == "function")?o.minWidth():o.minWidth) || 0;
 				widthContext=o.context.width();
 			}
 
@@ -121,7 +121,7 @@
 			//calculate panel position with all offsets calculated
 			var panelPos=panelTopOffset+panelInnerHeight-dockBottom-panelMarginTop;
 
-			if (scrollTopNew>panelPos && !isFixed && (widthMax<=widthContext)){
+			if (scrollTopNew>panelPos && !isFixed && (widthMin<=widthContext)){
 				var left=panel.offset().left;
 				updateSizes();
 				spacer.css({
@@ -148,7 +148,7 @@
 				panel.addClass(self.options.fixedClass);
 
 				info&&info("isFixed",isFixed);
-			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed || (widthMax>widthContext && isFixed)) {
+			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed || (widthMin>widthContext && isFixed)) {
 				spacer.detach();
         if (self.options.onSpacerDetached)
           self.options.onSpacerDetached(spacer);
