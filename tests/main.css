@@ -52,6 +52,9 @@ html,body {
 	height: 20em;
 	background-color: #e8be0c;
 }
+.sidemenu--big {
+  height: 30em;
+}
 .inlineelement {
 	float:left;
 	margin: 4em;

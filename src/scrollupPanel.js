@@ -165,7 +165,7 @@
 				panel.addClass(self.options.fixedClass);
 
 				info&&info("isFixed",isFixed);
-			} else if (scrollTopNew<(panelPos-panelScroll) && isFixed || !allowedToFix) {
+			} else if ((scrollTopNew<(panelPos-panelScroll) || !allowedToFix) && isFixed) {
 				spacer.detach();
         if (self.options.onSpacerDetached)
           self.options.onSpacerDetached(spacer);

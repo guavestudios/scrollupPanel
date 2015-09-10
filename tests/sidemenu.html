@@ -48,18 +48,26 @@
 				setExplizitWidth:true
 			});
 
-			setInterval(function(){
+
+			//setInterval(function(){
+
 				var s=$(".sidemenu");
-				if (s.data("big")){
-					s.css("height","");
-					s.data("big",false);
-				} else {
-					s.css("height","30em");
-					s.data("big",true);
-				}
-				//$(window).resize();
-				s.scrollupPanel().invalidate();
-			},5000);
+				var c=0;
+				s.on("click",function(){
+
+					if (c%2==0){
+						s.toggleClass("sidemenu--big");
+
+					} else {
+
+					}
+					//$(window).resize();
+					s.scrollupPanel().invalidate();
+
+					c++;
+				});
+
+			//},5000);
 		});
 	</script>
 </head>
