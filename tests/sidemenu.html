@@ -41,9 +41,25 @@
 				limit:function(){
 					return $(".page").last().height();
 				},
+				maxHeight:function(){
+					return $(window).height()/2;
+				},
 				debug:info,
 				setExplizitWidth:true
 			});
+
+			setInterval(function(){
+				var s=$(".sidemenu");
+				if (s.data("big")){
+					s.css("height","");
+					s.data("big",false);
+				} else {
+					s.css("height","30em");
+					s.data("big",true);
+				}
+				//$(window).resize();
+				s.scrollupPanel().invalidate();
+			},5000);
 		});
 	</script>
 </head>
