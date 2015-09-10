@@ -142,7 +142,7 @@
 				var left=panel.offset().left;
 				updateSizes();
 				spacer.css({
-					width:panelWidth,
+					width:panelWidth-1, //FIX: percentage values will be rounded so its possible that a element cannot float
 					height:panelHeight,
 					float:panel.css("float"),
 					display:panel.css("display")
