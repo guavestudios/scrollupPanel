@@ -105,7 +105,7 @@
 
 			panelMarginTop=((typeof o.marginTop == "function")?o.marginTop():o.marginTop) || 0;
 			spacer.css({
-				width: panelWidth,
+				width: panelWidth-1,  //FIX: percentage values will be rounded so its possible that a element cannot float
 				height: panelHeight
 			});
 			scrollUpStart=0;
@@ -184,6 +184,13 @@
 			}
 
 			if (isFixed){
+        if (force) {
+          spacer.css({
+    				width: panelWidth-1,  //FIX: percentage values will be rounded so its possible that a element cannot float
+    				height: panelHeight
+    			});
+        }
+
 				var top=Math.max(0,Math.min(scrollTopNew-scrollUpStart,panelInnerHeight))-panelMarginTop;
 				scrollUpStart=scrollTopNew-top;
 				panelScroll=panelInnerHeight-top;
