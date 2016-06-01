@@ -44,10 +44,22 @@
 				maxHeight:function(){
 					return $(window).height()/2;
 				},
-				debug:info,
+				//debug:info,
 				setExplizitWidth:true
 			});
 
+			$(".longmenu").scrollupPanel({
+				dock:$(".header").scrollupPanel(),
+				setExplizitWidth:true,
+				scrollUpHeight: function() {
+					return $(window).height()*0.2;
+				},
+				debug:info
+			});
+			$(".longmenu").on("click",function(){
+				$(this).toggleClass("longmenu--big");
+				$(this).scrollupPanel().invalidate();
+			});
 
 			//setInterval(function(){
 
@@ -84,6 +96,13 @@
 	<div class="page halfwidth" style="background-color:#009900;">
 		<span class="inlineelement">blablblabla</span>
 		<div class="sidemenu">sidemenu</div>
+		<div class="longmenu">
+			<div>Entry 1</div>
+			<div>Entry 2</div>
+			<div>Entry 3</div>
+			<div>Entry 4</div>
+			<div>Entry 5</div>
+		</div>
 	</div>
 	<div class="page" style="background-color:#000099;">
 		this page content is<br>

@@ -55,6 +55,21 @@ html,body {
 .sidemenu--big {
   height: 30em;
 }
+.longmenu {
+  float: left;
+  width: 30%;
+  height: 100vh;
+  background-color: #77f145;
+}
+.longmenu div {
+  height: 20%;
+  outline: 1px solid black;
+
+}
+.longmenu--big {
+  height:70vh;
+}
+
 .inlineelement {
 	float:left;
 	margin: 4em;

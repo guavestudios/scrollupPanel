@@ -26,6 +26,7 @@
 		var panelTopOffset=0;
 		var panelLeftOffset=0;
 		var panelInnerHeight=0;
+    var panelInnerOffset=0;
 		var panelMarginTop=0;
 		var panelScroll=0;
 		var panelBottomLimit=0;
@@ -191,8 +192,8 @@
     			});
         }
 
-				var top=Math.max(0,Math.min(scrollTopNew-scrollUpStart,panelInnerHeight))-panelMarginTop;
-				scrollUpStart=scrollTopNew-top;
+				var top=Math.max(panelInnerOffset,Math.min(scrollTopNew-scrollUpStart,panelInnerHeight))-panelMarginTop;
+        scrollUpStart=scrollTopNew-top;
 				panelScroll=panelInnerHeight-top;
 				var limitPenalty=0;
 				if (panelBottomLimit){
