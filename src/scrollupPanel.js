@@ -59,8 +59,8 @@
       maxHeight:null,
 			setExplizitWidth:false,
 			limit:null,
-
-      panelHeight:null
+      panelHeight:null,
+      detachAtZero: true
 		};
 
 		/**
@@ -133,7 +133,7 @@
 			//calculate panel position with all offsets calculated
 			var panelPos=panelTopOffset+panelInnerHeight-dockBottom-panelMarginTop;
 
-      var allowedToFix=(widthMin<=widthContext && widthMax>=widthContext && panelHeight<=heightMax);
+      var allowedToFix=(widthMin<=widthContext && widthMax>=widthContext && panelHeight<=heightMax) && !(self.options.detachAtZero && scrollTopNew==0);
 
       info&&info("allowFix",allowedToFix);
       //info&&info("panelHeight",panelHeight);
@@ -287,6 +287,7 @@
 		}
 	}
 
+  //JQUERY integration
 	$.fn.scrollupPanel=function(opts){
 		var id="scrollMenu";
 		var $elem=$(this);

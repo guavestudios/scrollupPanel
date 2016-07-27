@@ -76,6 +76,16 @@ html,body {
 
 }
 
+.fixedheader {
+  background: white;
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+.fixedheader.scrollupPanel-fixed {
+  background: grey;
+}
+
 //media querys
 @media (max-width: 500px){
   .topelement {
