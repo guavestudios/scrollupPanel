@@ -4,7 +4,7 @@
   "description": "scrollupPanel",
   "main": "src/scrollupPanel.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha-phantomjs tests/test.html"
   },
   "keywords": [
     "scroll"

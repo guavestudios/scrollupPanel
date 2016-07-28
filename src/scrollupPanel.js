@@ -256,6 +256,26 @@
 			}
 			return dockBottom+panelHeight;
 		}
+    function destroy() {
+      if (isFixed) {
+        if (panel) {
+          panel.css({
+  					top:"",
+  					left:"",
+  					width:"",
+  					height:"",
+  					position:"",
+  					bottom:""
+  				});
+
+        }
+      }
+      if (spacer) {
+        spacer.remove();
+      }
+      self.options.context.off("scroll",onScroll);
+			self.options.context.off("resize",onResize);
+    }
 
 		this.init=init;
 		this.getPanelHeight=getPanelHeight;
@@ -265,6 +285,7 @@
 		this.getVisiblePanelBottom=getVisiblePanelBottom;
 		this.getPanelBottomFull=getPanelBottomFull;
 		this.invalidate=invalidate;
+    this.destroy=destroy;
 	}
 	ScrollUpPanel.animationFrame={
 		queue:[],
@@ -292,6 +313,15 @@
 		var id="scrollMenu";
 		var $elem=$(this);
 		var m=$elem.data(id);
+
+    if (opts == "destroy") {
+      if (m) {
+        m.destroy();
+        $elem.data(id,null);
+      }
+      return;
+    }
+
 		if (m) return m;
 
 		return $elem.each(function(){
